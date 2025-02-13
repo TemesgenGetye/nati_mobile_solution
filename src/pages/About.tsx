@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useNavigate } from "react-router-dom";
 
 const faqs = [
   {
@@ -112,6 +113,7 @@ const values = [
 
 export default function AboutPage() {
   const [visibleFaqs, setVisibleFaqs] = useState(4);
+  const router = useNavigate();
 
   const loadMoreFaqs = () => {
     setVisibleFaqs((prev) => Math.min(prev + 4, faqs.length));
@@ -139,6 +141,7 @@ export default function AboutPage() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-cyan-400 to-blue-600 text-white border-none hover:opacity-90 transition-all duration-300 transform hover:scale-105"
+                onClick={() => router("/services")}
               >
                 Our Services <ChevronRight className="ml-2" />
               </Button>
@@ -158,26 +161,20 @@ export default function AboutPage() {
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
                   Our Story
                 </h2>
-                <p className="text-gray-300 mb-4 text-sm">
-                  Founded in 2010, NATI Mobile Solution started as a small
+                <p className="text-gray-300 mb-4 text-md">
+                  Founded in 2020, NATI Mobile Solution started as a small
                   repair shop with a big vision. Our founder, driven by a
                   passion for technology and a desire to help people, saw an
                   opportunity to provide high-quality repair services at
                   affordable prices.
                 </p>
-                <p className="text-gray-300 mb-6 text-sm">
+                <p className="text-gray-300 mb-6 text-md">
                   Over the years, we've grown into a trusted name in the
                   industry, known for our expertise, reliability, and
                   customer-first approach. Today, we're proud to serve thousands
                   of satisfied customers and continue to expand our services to
                   meet the evolving needs of the digital age.
                 </p>
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-cyan-400 to-blue-600 text-white border-none hover:opacity-90 transition-all duration-300 transform hover:scale-105"
-                >
-                  Our Journey <ChevronRight className="ml-2" />
-                </Button>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, x: 50 }}

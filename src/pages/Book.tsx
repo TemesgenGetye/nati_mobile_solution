@@ -12,6 +12,7 @@ import {
 } from "../components/ui/select";
 import { Card } from "../components/ui/card";
 import { CheckCircle2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const formSteps = [
   "Device Info",
@@ -30,7 +31,17 @@ const BookRepairPage: React.FC = () => {
     deviceModel: "",
     issue: "",
   });
+  const [errors, setErrors] = useState({
+    deviceType: "",
+    deviceModel: "",
+    name: "",
+    email: "",
+    phone: "",
+    issue: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Handle input change
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -39,30 +50,112 @@ const BookRepairPage: React.FC = () => {
       ...prevState,
       [name]: value,
     }));
+    // Clear errors when user starts typing
+    setErrors((prevState) => ({
+      ...prevState,
+      [name]: "",
+    }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", { ...formData, deviceType });
+  // Validate current step
+  const validateStep = () => {
+    let isValid = true;
+    const newErrors = { ...errors };
 
-    alert(
-      "We've received your repair request. We'll contact you shortly to confirm the details"
-    );
-    // Reset form after submission
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      deviceModel: "",
-      issue: "",
-    });
-    setDeviceType("");
-    setCurrentStep(0);
+    if (currentStep === 0) {
+      if (!deviceType) {
+        newErrors.deviceType = "Device type is required";
+        isValid = false;
+      }
+      if (!formData.deviceModel.trim()) {
+        newErrors.deviceModel = "Device model is required";
+        isValid = false;
+      }
+    }
+
+    if (currentStep === 1) {
+      if (!formData.name.trim()) {
+        newErrors.name = "Name is required";
+        isValid = false;
+      }
+      if (!formData.email.trim()) {
+        newErrors.email = "Email is required";
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = "Email is invalid";
+        isValid = false;
+      }
+      if (!formData.phone.trim()) {
+        newErrors.phone = "Phone is required";
+        isValid = false;
+      }
+    }
+
+    if (currentStep === 2 && !formData.issue.trim()) {
+      newErrors.issue = "Issue description is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
-  const nextStep = () =>
-    setCurrentStep((prev) => Math.min(prev + 1, formSteps.length - 1));
+  // Handle next step
+  const nextStep = () => {
+    if (validateStep()) {
+      setCurrentStep((prev) => Math.min(prev + 1, formSteps.length - 1));
+    }
+  };
+
+  // Handle previous step
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    if (validateStep()) {
+      try {
+        const response = await fetch("https://formspree.io/f/mnnjbokw", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            deviceType,
+          }),
+        });
+
+        if (response.ok) {
+          toast.success(
+            "We've received your repair request. We'll contact you shortly to confirm the details."
+          );
+
+          // Reset form
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            deviceModel: "",
+            issue: "",
+          });
+          setDeviceType("");
+          setCurrentStep(0);
+        } else {
+          toast.error("Failed to submit the form. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        toast.error("An error occurred. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -155,9 +248,16 @@ const BookRepairPage: React.FC = () => {
                                   Smartphone
                                 </SelectItem>
                                 <SelectItem value="tablet">Tablet</SelectItem>
-                                <SelectItem value="laptop">Laptop</SelectItem>
+                                <SelectItem value="watch">
+                                  SmartWatch
+                                </SelectItem>
                               </SelectContent>
                             </Select>
+                            {errors.deviceType && (
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.deviceType}
+                              </p>
+                            )}
                           </div>
                           {deviceType && (
                             <div>
@@ -175,6 +275,11 @@ const BookRepairPage: React.FC = () => {
                                 placeholder="e.g. iPhone 12, Samsung Galaxy S21"
                                 className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
                               />
+                              {errors.deviceModel && (
+                                <p className="text-red-500 text-sm mt-1">
+                                  {errors.deviceModel}
+                                </p>
+                              )}
                             </div>
                           )}
                         </div>
@@ -208,6 +313,11 @@ const BookRepairPage: React.FC = () => {
                               placeholder="Your Name"
                               className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
                             />
+                            {errors.name && (
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.name}
+                              </p>
+                            )}
                           </div>
                           <div>
                             <label
@@ -225,6 +335,11 @@ const BookRepairPage: React.FC = () => {
                               placeholder="your@email.com"
                               className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
                             />
+                            {errors.email && (
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.email}
+                              </p>
+                            )}
                           </div>
                           <div>
                             <label
@@ -239,9 +354,14 @@ const BookRepairPage: React.FC = () => {
                               type="tel"
                               value={formData.phone}
                               onChange={handleInputChange}
-                              placeholder="(123) 456-7890"
+                              placeholder="09 123 4567"
                               className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
                             />
+                            {errors.phone && (
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.phone}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </motion.div>
@@ -274,6 +394,11 @@ const BookRepairPage: React.FC = () => {
                             className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
                             rows={4}
                           />
+                          {errors.issue && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.issue}
+                            </p>
+                          )}
                         </div>
                       </motion.div>
                     )}
@@ -332,8 +457,9 @@ const BookRepairPage: React.FC = () => {
                       <Button
                         type="submit"
                         className="bg-gradient-to-r from-cyan-400 to-blue-600 text-white border-none hover:opacity-90"
+                        disabled={isSubmitting}
                       >
-                        Book Repair
+                        {isSubmitting ? "Submitting..." : "Book Repair"}
                       </Button>
                     )}
                   </div>

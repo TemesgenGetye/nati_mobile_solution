@@ -4,15 +4,15 @@ import { Card } from "@/components/ui/card";
 import {
   Smartphone,
   Tablet,
-  Laptop,
-  Monitor,
   Headphones,
   Watch,
   ChevronRight,
 } from "lucide-react";
 import Footer from "@/components/Footer";
+import { useNavigate } from "react-router-dom";
 
 export default function ServicesPage() {
+  const router = useNavigate();
   return (
     <div className="absolute inset-0 bg-gradient-to-br from-cyan-950 via-black to-blue-950">
       <main className="pt-20">
@@ -61,12 +61,6 @@ export default function ServicesPage() {
                         </li>
                       ))}
                     </ul>
-                    <Button
-                      variant="outline"
-                      className="w-full group-hover:bg-cyan-400 group-hover:text-black transition-all"
-                    >
-                      Learn More
-                    </Button>
                   </Card>
                 </motion.div>
               ))}
@@ -128,6 +122,7 @@ export default function ServicesPage() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-cyan-400 to-blue-600 text-white border-none hover:opacity-90"
+                onClick={() => router("/book-repair")}
               >
                 Book a Repair
               </Button>
@@ -146,10 +141,16 @@ const services = [
     description: "Expert repair services for all smartphone brands and models.",
     icon: Smartphone,
     features: [
-      "Screen Replacement",
-      "Battery Replacement",
+      "Screen Replacement (Original & High Quality)",
+      "Battery Replacement (Original)",
       "Water Damage Repair",
       "Camera Repair",
+      "Network Unlocking",
+      "Flashing & Software Repair",
+      "iPhone Bypass",
+      "Genuine Mobile Accessories",
+      "Board Repair & Maintenance",
+      "Phone Exchange",
     ],
   },
   {
@@ -161,28 +162,9 @@ const services = [
       "Battery Service",
       "Charging Port Repair",
       "Software Issues",
-    ],
-  },
-  {
-    title: "Laptop Repair",
-    description: "Professional laptop repair and maintenance services.",
-    icon: Laptop,
-    features: [
-      "Hardware Repair",
-      "Software Installation",
-      "Data Recovery",
-      "Virus Removal",
-    ],
-  },
-  {
-    title: "Desktop Computer Repair",
-    description: "Complete repair and upgrade services for desktop computers.",
-    icon: Monitor,
-    features: [
-      "Hardware Upgrades",
-      "Custom Builds",
-      "Performance Optimization",
-      "Troubleshooting",
+      "Network Unlocking",
+      "Flashing & Software Repair",
+      "Phone Exchange",
     ],
   },
   {
@@ -194,6 +176,7 @@ const services = [
       "Cable Repair",
       "Bluetooth Connectivity Issues",
       "Sound Quality Improvement",
+      "Phone Exchange",
     ],
   },
   {
@@ -213,41 +196,65 @@ const advancedTechniques = [
   {
     title: "Micro-Soldering",
     description:
-      "Our expert technicians use advanced micro-soldering techniques to repair damaged components at the board level.",
+      "Our expert technicians use advanced micro-soldering techniques to repair damaged components at the board level, especially for intricate smartphone issues.",
     benefits: [
       "Repair of complex issues like touch disease or audio IC failure",
       "Cost-effective alternative to full board replacement",
       "Extends the life of your device",
+      "Applicable to various devices like smartphones, tablets, and game consoles",
     ],
   },
   {
     title: "Liquid Damage Treatment",
     description:
-      "We use specialized equipment and techniques to treat liquid-damaged devices and prevent long-term corrosion.",
+      "We use specialized equipment and techniques to treat liquid-damaged devices and prevent long-term corrosion, restoring functionality to phones, tablets, and more.",
     benefits: [
       "Ultrasonic cleaning to remove corrosion",
       "Hydrophobic coating application to protect against future damage",
       "Higher success rate compared to traditional drying methods",
+      "Effective for a wide range of devices including smartphones, tablets, and audio devices",
     ],
   },
   {
     title: "OCA (Optically Clear Adhesive) Screen Replacement",
     description:
-      "Our OCA lamination process ensures a factory-quality finish for screen replacements.",
+      "Our OCA lamination process ensures a factory-quality finish for screen replacements, especially for high-end smartphones, tablets, and smartwatches.",
     benefits: [
       "Improved touch sensitivity and responsiveness",
       "Better optical clarity and reduced glare",
       "Stronger, more durable screen bond",
+      "Compatible with various device types, including smartphones and tablets",
     ],
   },
   {
     title: "Data Recovery",
     description:
-      "We use advanced software and hardware solutions to recover data from damaged or non-functional devices.",
+      "We use advanced software and hardware solutions to recover data from damaged or non-functional devices, ensuring that your important data is safe.",
     benefits: [
       "Recovery from water-damaged devices",
       "Extraction of data from devices with failed components",
       "Secure and confidential data handling",
+      "Data recovery for smartphones, tablets, laptops, and more",
+    ],
+  },
+  {
+    title: "Network Unlocking",
+    description:
+      "Our technicians specialize in unlocking mobile devices to work on any carrier network, improving the device's versatility and resale value.",
+    benefits: [
+      "Unlock your device to use it with any carrier worldwide",
+      "Enhances resale value by making the device more universally compatible",
+      "Safe, reliable, and fast unlocking process",
+    ],
+  },
+  {
+    title: "Flashing & Software Repair",
+    description:
+      "We repair and restore devices with corrupt or faulty firmware through flashing, ensuring your device is running smoothly again.",
+    benefits: [
+      "Restores devices with software issues or boot loops",
+      "Updates and restores system software to factory settings",
+      "Fixes issues related to system crashes or unresponsiveness",
     ],
   },
 ];

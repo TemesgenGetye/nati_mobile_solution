@@ -1,19 +1,22 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { PhoneModel } from "../components/Phone-modal";
-import { Navbar } from "../components/NavbarNext";
-import { Footer } from "../components/FooterNext";
+
 import { Card } from "@/components/ui/card";
 import {
   Smartphone,
   Tablet,
-  Laptop,
   Clock,
   Shield,
   Award,
   ChevronRight,
   Star,
   DollarSign,
+  Watch,
+  BatteryChargingIcon,
+  Code2Icon,
+  LockIcon,
+  CircuitBoardIcon,
 } from "lucide-react";
 import {
   Accordion,
@@ -21,25 +24,56 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { FaMobileButton, FaStackExchange } from "react-icons/fa6";
+import { FaExchangeAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const services = [
   {
-    title: "Phone Repair",
+    title: "Screen Replacement",
     description:
-      "Expert repair services for all smartphone brands including iPhone, Samsung, and more.",
+      "Get your device back to life with our screen replacement services.",
     icon: Smartphone,
   },
   {
-    title: "Tablet Repair",
+    title: "Battery Replacement",
     description:
-      "Professional tablet repair and maintenance services for all major brands.",
-    icon: Tablet,
+      "Replace your device's battery with our high-quality replacements.",
+    icon: BatteryChargingIcon,
   },
   {
-    title: "Laptop Repair",
+    title: "Network Unlocking",
     description:
-      "Comprehensive laptop repair solutions for hardware and software issues.",
-    icon: Laptop,
+      "Unlock your device's network with our expert network unlocking services.",
+    icon: Shield,
+  },
+  {
+    title: "Flashing & Software Repair",
+    description:
+      "Fix your device's software and firmware with our flashing and software repair services.",
+    icon: Code2Icon,
+  },
+  {
+    title: "iPhone Bypass",
+    description: "Unlock your iPhone with our expert iPhone bypass services.",
+    icon: LockIcon,
+  },
+  {
+    title: "Genuine Mobile Accessories",
+    description:
+      "Get your hands on genuine mobile accessories with our expert services.",
+    icon: FaMobileButton,
+  },
+  {
+    title: "Board Repair & Maintenance",
+    description:
+      "Fix your device's board with our expert board repair and maintenance services.",
+    icon: CircuitBoardIcon,
+  },
+  {
+    title: "Phone Exchange",
+    description: "Swap your device with our expert phone exchange services.",
+    icon: FaExchangeAlt,
   },
 ];
 
@@ -153,6 +187,7 @@ const latestTechnology = [
 ];
 
 export default function Home() {
+  const router = useNavigate();
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
@@ -172,7 +207,7 @@ export default function Home() {
               <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
                 Expert Device Repair
               </h1>
-              <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
+              <p className="text-sm md:text-lg text-gray-300 mb-8 leading-relaxed">
                 Professional repairs for your valuable devices. Fast, reliable,
                 and guaranteed service by certified technicians.
               </p>
@@ -180,6 +215,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   className="bg-gradient-to-r from-cyan-400 to-blue-600 text-white border-none hover:opacity-90"
+                  onClick={() => router("/book-repair")}
                 >
                   Book Now
                 </Button>
@@ -187,6 +223,7 @@ export default function Home() {
                   size="lg"
                   variant="outline"
                   className="text-cyan-400 border-white/20 hover:border-x-slate-100"
+                  onClick={() => router("/about")}
                 >
                   Learn More
                 </Button>
@@ -236,7 +273,11 @@ export default function Home() {
                     {service.title}
                   </h3>
                   <p className="text-gray-400 mb-6">{service.description}</p>
-                  <Button variant="ghost" className="group-hover:text-cyan-400">
+                  <Button
+                    variant="ghost"
+                    className="group-hover:text-cyan-400"
+                    onClick={() => router("/services")}
+                  >
                     Learn More <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Card>
@@ -434,6 +475,7 @@ export default function Home() {
             <Button
               size="lg"
               className="bg-gradient-to-r from-cyan-400 to-blue-600 text-white border-none hover:opacity-90 transition-all duration-300 transform hover:scale-105"
+              onClick={() => router("/book-repair")}
             >
               Schedule Repair
             </Button>

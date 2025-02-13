@@ -6,6 +6,7 @@ import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Book from "./pages/Book";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -20,6 +21,32 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/book-repair" element={<Book />} />
           </Routes>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            gutter={8}
+            containerClassName=""
+            containerStyle={{}}
+            toastOptions={{
+              // Define default options
+              className: "",
+              duration: 5000,
+              removeDelay: 1000,
+              style: {
+                background: "#ffffff",
+                color: "#000000",
+              },
+
+              // Default options for specific types
+              success: {
+                duration: 3000,
+                iconTheme: {
+                  primary: "green",
+                  secondary: "black",
+                },
+              },
+            }}
+          />
         </main>
         <Footer />
       </div>

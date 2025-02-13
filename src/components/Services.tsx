@@ -1,33 +1,53 @@
-import React from "react";
 import { Smartphone, Watch, Shield, Tablet } from "lucide-react";
 import { motion } from "framer-motion";
 import { colors } from "../styles/colors";
-import Footer from "./Footer";
 
 const services = [
   {
+    title: "Screen Replacement",
+    description:
+      "Get your device back to life with our screen replacement services.",
     icon: Smartphone,
-    title: "Phone Repair",
-    description:
-      "Expert repairs for all smartphone brands including iPhone, Samsung, and more.",
   },
   {
+    title: "Battery Replacement",
+    description:
+      "Replace your device's battery with our high-quality replacements.",
     icon: Watch,
-    title: "Watch Repair",
-    description:
-      "Specialized repair services for smartwatches and fitness trackers.",
   },
   {
-    icon: Tablet,
-    title: "Tablet Repair",
+    title: "Network Unlocking",
     description:
-      "Professional repair services for all major tablet brands and models.",
-  },
-  {
+      "Unlock your device's network with our expert network unlocking services.",
     icon: Shield,
-    title: "Warranty Service",
+  },
+  {
+    title: "Flashing & Software Repair",
     description:
-      "All repairs come with a 90-day warranty for your peace of mind.",
+      "Fix your device's software and firmware with our flashing and software repair services.",
+    icon: Tablet,
+  },
+  {
+    title: "iPhone Bypass",
+    description: "Unlock your iPhone with our expert iPhone bypass services.",
+    icon: Watch,
+  },
+  {
+    title: "Genuine Mobile Accessories",
+    description:
+      "Get your hands on genuine mobile accessories with our expert services.",
+    icon: Watch,
+  },
+  {
+    title: "Board Repair & Maintenance",
+    description:
+      "Fix your device's board with our expert board repair and maintenance services.",
+    icon: Watch,
+  },
+  {
+    title: "Phone Exchange",
+    description: "Swap your device with our expert phone exchange services.",
+    icon: Watch,
   },
 ];
 
